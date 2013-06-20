@@ -1,0 +1,253 @@
+
+.separator '|'
+
+CREATE TABLE CONTACT_INFO
+(
+	crsp_fundno  INTEGER NOT NULL,
+	chgdt  DATE NOT NULL,
+	chgenddt  DATE,
+	address1  varchar(40),
+	address2  varchar(40),
+	city  varchar(30),
+	state  varchar(2),
+	zip  varchar(10),
+	phone_no  varchar(12),
+	fund_toll_free  varchar(12),
+	website  varchar(256),
+	PRIMARY KEY (crsp_fundno,chgdt)
+)
+;
+
+.import 'CONTACT_INFO.TXT' CONTACT_INFO
+
+CREATE TABLE CRSP_PORTNO_MAP
+(
+	crsp_fundno  INTEGER NOT NULL,
+	crsp_portno  INTEGER NOT NULL,
+	begdt  DATE NOT NULL,
+	enddt  DATE NOT NULL,
+	PRIMARY KEY (crsp_fundno,crsp_portno,begdt)
+)
+;
+
+.import 'CRSP_PORTNO_MAP.TXT' CRSP_PORTNO_MAP
+
+CREATE TABLE FUND_FEES
+(
+        crsp_fundno  INTEGER NOT NULL,
+        begdt  DATE NOT NULL,
+        enddt  DATE NULL,
+        actual_12b1  FLOAT NULL,
+        max_12b1  FLOAT,
+        exp_ratio  FLOAT,
+        mgmt_fee  FLOAT,
+        turn_ratio  FLOAT,
+        fiscal_yearend  DATE,
+        PRIMARY KEY (crsp_fundno,begdt)
+)
+;
+
+.import 'FUND_FEES.TXT' FUND_FEES
+
+CREATE TABLE FUND_HDR
+(
+	crsp_fundno  INTEGER NOT NULL,
+	crsp_portno  INTEGER,
+	crsp_cl_grp  INTEGER,
+	fund_name  varchar(140),
+	nasdaq  varchar(5),
+	ncusip  varchar(9),
+	first_offer_dt  DATE,
+	mgmt_name  varchar(80),
+	mgmt_cd  varchar(4),
+	mgr_name  varchar(30),
+	mgr_dt  DATE,
+	adv_name  varchar(40),
+	open_to_inv  varchar(1),
+	retail_fund  varchar(1),
+	inst_fund  varchar(1),
+	m_fund  varchar(1),
+	index_fund_flag varchar(3),
+	vau_fund varchar(1),
+	et_flag varchar(1),
+	end_dt  DATE,
+	dead_flag  varchar(1),
+	delist_cd  varchar(3),
+	merge_fundno  INTEGER,
+	PRIMARY KEY (crsp_fundno)
+)
+;
+
+.import 'FUND_HDR.TXT' FUND_HDR
+
+CREATE TABLE FUND_HDR_HIST
+(
+	crsp_fundno  INTEGER NOT NULL,
+	chgdt  DATE NOT NULL,
+	chgenddt  DATE,
+	crsp_portno  INTEGER,
+	crsp_cl_grp  INTEGER, 
+	fund_name  varchar(140),
+	nasdaq  varchar(5),
+	ncusip  varchar(9),
+	first_offer_dt  DATE,
+	mgmt_name  varchar(80),
+	mgmt_cd  varchar(4),
+	mgr_name  varchar(30),
+	mgr_dt  DATE,
+	adv_name  varchar(40),
+	open_to_inv  varchar(1),
+	retail_fund  varchar(1),
+	inst_fund  varchar(1),
+	m_fund  varchar(1) NOT NULL,
+	index_fund_flag varchar(3),
+	vau_fund varchar(1),
+	et_flag varchar(1),
+	PRIMARY KEY (crsp_fundno,chgdt)
+)
+;
+
+.import 'FUND_HDR_HIST.TXT' FUND_HDR_HIST
+
+
+CREATE TABLE FUND_STYLE
+(
+	crsp_fundno  INTEGER NOT NULL,
+	begdt  DATE NOT NULL,
+	enddt  DATE,
+	crsp_obj_cd varchar(4), 
+	si_obj_cd  varchar(3),
+	accrual_fund  varchar(1),
+	sales_restrict  varchar(1),
+	wbrger_obj_cd  varchar(5),
+	policy  varchar(6),
+	lipper_class  VARCHAR(4),
+	lipper_class_name  varchar(42),
+	lipper_obj_cd  varchar(3),
+	lipper_obj_name  varchar(42),
+	lipper_asset_cd  VARCHAR(2),
+	lipper_tax_cd  VARCHAR(10),
+	PRIMARY KEY (crsp_fundno,begdt)
+)
+;
+
+.import 'FUND_STYLE.TXT' FUND_STYLE
+
+
+CREATE TABLE FUND_SUMMARY
+(
+	crsp_fundno  INTEGER NOT NULL,
+	caldt  DATE NOT NULL,
+	summary_period  varchar(1),
+	nav_latest  FLOAT,
+	nav_latest_dt  DATE,
+	tna_latest  FLOAT,
+	tna_latest_dt  DATE,
+	yield  FLOAT,
+	div_ytd  FLOAT,
+	cap_gains_ytd  FLOAT,
+	nav_52W_h  FLOAT,
+	nav_52w_h_dt  DATE,
+	nav_52w_l  FLOAT,
+	nav_52w_l_dt  DATE,
+	unrealized_app_dep  INTEGER,
+	unrealized_app_dt  INTEGER,
+	asset_dt  DATE,
+	per_com  FLOAT,
+	per_pref  FLOAT,
+	per_conv  FLOAT,
+	per_corp  FLOAT,
+	per_muni  FLOAT,
+	per_govt  FLOAT,
+	per_oth  FLOAT,
+	per_cash  FLOAT,
+	per_bond  FLOAT,
+	per_abs  FLOAT,
+	per_mbs  FLOAT,
+	per_eq_oth  FLOAT,
+	per_fi_oth  FLOAT,
+	maturity  FLOAT,
+	maturity_dt  DATE,
+	PRIMARY KEY (crsp_fundno,caldt)
+)
+;
+
+.import 'FUND_SUMMARY.TXT' FUND_SUMMARY
+
+CREATE TABLE MONTHLY_RETURNS
+(
+	crsp_fundno  INTEGER NOT NULL,
+	caldt  DATE NOT NULL,
+	mret  FLOAT,
+	PRIMARY KEY (crsp_fundno,caldt)
+)
+;
+
+.import 'MONTHLY_RETURNS.TXT' MONTHLY_RETURNS
+
+
+CREATE TABLE FRONT_LOAD_DET
+(
+	crsp_fundno  INTEGER NOT NULL,
+	front_group_no  INTEGER NOT NULL,
+	dollar_amt  FLOAT NOT NULL,
+	front_load  FLOAT NOT NULL,
+	PRIMARY KEY (crsp_fundno,front_group_no,dollar_amt)
+)
+;
+
+.import 'FRONT_LOAD_DET.TXT' FRONT_LOAD_DET
+
+
+CREATE TABLE FRONT_LOAD_GRP
+(
+	crsp_fundno  INTEGER NOT NULL,
+	front_group_no  INTEGER NOT NULL,
+	begdt  DATE NULL,
+	enddt  DATE NULL,
+	PRIMARY KEY (crsp_fundno,front_group_no)
+)
+;
+
+.import 'FRONT_LOAD_GRP.TXT' FRONT_LOAD_GRP
+
+
+CREATE TABLE MONTHLY_TNA
+(
+	crsp_fundno  INTEGER NOT NULL,
+	caldt  DATE NOT NULL,
+	mtna  FLOAT,
+	PRIMARY KEY (crsp_fundno,caldt)
+)
+;
+
+.import 'MONTHLY_TNA.TXT' MONTHLY_TNA
+
+CREATE TABLE REAR_LOAD_GRP
+(
+	crsp_fundno  INTEGER NOT NULL,
+	rear_group_no  INTEGER NOT NULL,
+	begdt  DATE,
+	enddt  DATE,
+	PRIMARY KEY (crsp_fundno,rear_group_no)
+)
+;
+
+.import 'REAR_LOAD_GRP.TXT' REAR_LOAD_GRP
+
+
+
+CREATE TABLE REAR_LOAD_DET
+(
+	crsp_fundno  INTEGER NOT NULL,
+	rear_group_no  INTEGER NOT NULL,
+	load_type  varchar(2) NOT NULL,
+	inv_lvl  INTEGER NOT NULL,
+	time_period  FLOAT NOT NULL,
+	rear_load  FLOAT,
+	PRIMARY KEY (crsp_fundno,rear_group_no,load_type,inv_lvl,time_period)
+)
+;
+
+.import 'REAR_LOAD_DET.TXT' REAR_LOAD_DET
+

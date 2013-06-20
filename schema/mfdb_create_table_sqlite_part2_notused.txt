@@ -1,0 +1,154 @@
+CREATE TABLE DAILY_NAV
+(
+	crsp_fundno  INTEGER NOT NULL,
+	caldt  DATE NOT NULL,
+	dnav  FLOAT,PRIMARY KEY (crsp_fundno,caldt)
+)
+;
+
+.import 'DAILY_NAV.TXT' DAILY_NAV
+
+CREATE TABLE DAILY_RETURNS
+(
+	crsp_fundno  INTEGER NOT NULL,
+	caldt  DATE NOT NULL,
+	dret  FLOAT,PRIMARY KEY (crsp_fundno,caldt)
+)
+;
+
+.import 'DAILY_RETURNS.TXT' DAILY_RETURNS
+
+
+CREATE TABLE DIVIDENDS
+(
+	crsp_fundno  INTEGER NOT NULL,
+	caldt  DATE NOT NULL,
+	dis_type  varchar(2) NOT NULL,
+	dis_amt  float,
+	reinvest_nav float,
+	spl_ratio  float,PRIMARY KEY (crsp_fundno,caldt,dis_type)
+)
+;
+
+.import 'DIVIDENDS.TXT' DIVIDENDS
+
+
+
+CREATE TABLE FRONT_LOAD_DET
+(
+	crsp_fundno  INTEGER NOT NULL,
+	front_group_no  INTEGER NOT NULL,
+	dollar_amt  FLOAT NOT NULL,
+	front_load  FLOAT NOT NULL,PRIMARY KEY (crsp_fundno,front_group_no,dollar_amt)
+)
+;
+
+.import 'FRONT_LOAD_DET.TXT' FRONT_LOAD_DET
+
+
+CREATE TABLE FRONT_LOAD_GRP
+(
+	crsp_fundno  INTEGER NOT NULL,
+	front_group_no  INTEGER NOT NULL,
+	begdt  DATE NULL,
+	enddt  DATE NULL,PRIMARY KEY (crsp_fundno,front_group_no)
+)
+;
+
+.import 'FRONT_LOAD_GRP.TXT' FRONT_LOAD_GRP
+
+CREATE TABLE FUND_FEES
+(
+	crsp_fundno  INTEGER NOT NULL,
+	begdt  DATE NOT NULL,
+	enddt  DATE NULL,
+	actual_12b1  FLOAT NULL,
+	max_12b1  FLOAT,
+	exp_ratio  FLOAT,
+	mgmt_fee  FLOAT,
+	turn_ratio  FLOAT,
+	fiscal_yearend  DATE,PRIMARY KEY (crsp_fundno,begdt)
+)
+;
+
+.import 'FUND_FEES.TXT' FUND_FEES
+
+
+CREATE TABLE HOLDINGS
+(
+	crsp_portno  INTEGER NOT NULL,
+	report_dt  DATE NOT NULL,
+	security_rank  INTEGER NOT NULL,
+	eff_dt  DATE,
+	percent_tna  FLOAT,
+	nbr_shares  INTEGER,
+	market_val  FLOAT,
+	crsp_company_key  INTEGER NOT NULL,PRIMARY KEY (crsp_portno,report_dt,security_rank,crsp_company_key)
+)
+;
+
+.import 'HOLDINGS.TXT' HOLDINGS
+
+
+CREATE TABLE HOLDINGS_CO_INFO
+(
+	crsp_company_key  INTEGER NOT NULL,
+	security_name  varchar(200) NOT NULL,
+	cusip  varchar(9),
+	permno  INTEGER,
+	permco  INTEGER,
+	ticker  VARCHAR(10),
+	coupon  FLOAT,
+	maturity_dt  DATE,PRIMARY KEY (crsp_company_key)
+)
+;
+
+.import 'HOLDINGS_CO_INFO.TXT' HOLDINGS_CO_INFO
+
+CREATE TABLE MONTHLY_NAV
+(
+	crsp_fundno  INTEGER NOT NULL,
+	caldt  DATE NOT NULL,
+	mnav  FLOAT,PRIMARY KEY (crsp_fundno,caldt)
+)
+;
+
+.import 'MONTHLY_NAV.TXT' MONTHLY_NAV
+
+CREATE TABLE MONTHLY_TNA
+(
+	crsp_fundno  INTEGER NOT NULL,
+	caldt  DATE NOT NULL,
+	mtna  FLOAT,PRIMARY KEY (crsp_fundno,caldt)
+)
+;
+
+.import 'MONTHLY_TNA.TXT' MONTHLY_TNA
+
+CREATE TABLE REAR_LOAD_GRP
+(
+	crsp_fundno  INTEGER NOT NULL,
+	rear_group_no  INTEGER NOT NULL,
+	begdt  DATE,
+	enddt  DATE,PRIMARY KEY (crsp_fundno,rear_group_no)
+)
+;
+
+.import 'REAR_LOAD_GRP.TXT' REAR_LOAD_GRP
+
+
+
+CREATE TABLE REAR_LOAD_DET
+(
+	crsp_fundno  INTEGER NOT NULL,
+	rear_group_no  INTEGER NOT NULL,
+	load_type  varchar(2) NOT NULL,
+	inv_lvl  INTEGER NOT NULL,
+	time_period  FLOAT NOT NULL,
+	rear_load  FLOAT,PRIMARY KEY (crsp_fundno,rear_group_no,load_type,inv_lvl,time_period)
+)
+;
+
+.import 'REAR_LOAD_DET.TXT' REAR_LOAD_DET
+
+
