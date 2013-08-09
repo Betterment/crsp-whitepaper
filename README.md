@@ -19,7 +19,7 @@ Active Funds vs Index Funds using CRSP(R) Survivor-bias-free database
 =============
 
 This is the code used to conduct the research for a whitepaper created by Richard Ferri of Portfolio Solutions, LLC
-and Alex Benke of Betterment.  The whitepaper may be downloaded here: <https://www.betterment.com/resources/WhitePaper.pdf>
+and Alex Benke of Betterment.  The whitepaper may be downloaded here: <https://www.betterment.com/resources/BMT-PS_Whitepaper.pdf>
 
 Data requirements
 -------
